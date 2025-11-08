@@ -32,7 +32,7 @@ Validation Logic Notes
 - Terms: must be checked.
 
 
-#Notes
+## Notes
 
 Day 1
 - Completed: field list and rules.

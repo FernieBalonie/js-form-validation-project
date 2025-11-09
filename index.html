@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Form Validation Project</title>
+</head>
+<body>
+    <h1>JavaScript Form Validation</h1>
+    <h2>Registration Form</h2>
+    <div class="container">
+        <form id ="registrationFrom" novalidate>
+            <div class="form-group">
+                <label for="fullName">Full Name:</label>
+                <input type="text" id="fullName" name="fullName" required>
+                <span class="error-message" id="nameError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+                <span class="error-message" id="emailError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+                <span class="error-message" id="dobError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <select id="country" name="country" required>
+                    <option value="">Select a country</option>
+                    <option value="US">United States</option>
+                    <option value="CA">Canada</option>
+                    <option value="MX">Mexico</option>
+                    <option value="GB">United Kingdom</option>
+                    <option value="AU">Australia</option>
+                    <option value="IN">India</option>
+                    <option value="FR">France</option>
+                    <option value="DE">Germany</option>
+                    <option value="IT">Italy</option>
+                    <option value="ES">Spain</option>
+                    <option value="CN">China</option>
+                    <option value="JP">Japan</option>
+                    <option value="KR">South Korea</option>
+                    <option value="BR">Brazil</option>
+                    <option value="RU">Russia</option>
+                    <option value="SA">Saudi Arabia</option>
+                    <option value="EG">Egypt</option>  
+                    <option value="TN">Tunisia</option>
+                    <option value="MA">Morocco</option>
+                </select>
+                <span class="error-message" id="countryError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="postalCode">Postal Code:</label>
+                <input type="text" id="postalCode" name="postalCode" required>
+                <span class="error-message" id="postalCodeError"></span>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="terms" name="terms" required>
+                    I agree to the terms and conditions.
+                </label>>
+                <span class="error-message" id="termsError"></span>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

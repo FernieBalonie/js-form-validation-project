@@ -32,8 +32,4 @@ Validation Logic Notes
 - Terms: must be checked.
 
 
-## Notes
 
-Day 1
-- Completed: field list and rules.
-- Tomorrow: start HTML layout and form structure.

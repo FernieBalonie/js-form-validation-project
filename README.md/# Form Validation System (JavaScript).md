@@ -51,3 +51,5 @@ Day 3
 - Completed: 
 - Tomorrow: 
 
+## Ideas
+- Make sure accents are allowed.

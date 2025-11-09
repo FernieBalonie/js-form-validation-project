@@ -7,7 +7,7 @@ This project demonstrates real-world validation logic used in modern web applica
 - Field-specific validation (name, email, dob, country, postal code, terms).
 - Real-time feedback.
 - Cross-field validation (e.g., country -> postal code).
-- Error message handling system
+- Error message handling system.
 
 ## Project Goals
 - Learn and apply JavaScript validation methods.
@@ -43,5 +43,11 @@ Day 1
 
 Day 2
 - Goals: Wireframe, HTML skeleton, validation-ready structure.
-- Completed:
+- Completed: All.
+- Tomorrow: Focus on JavaScript validation logic and test name field.
+
+Day 3
+- Goals: Build a JavaScript validation function for name input field.
+- Completed: 
 - Tomorrow: 
+

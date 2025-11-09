@@ -15,15 +15,24 @@ Validation is done entirely in JavaScript to simulate how a web app would verify
 
   |  Field   |  Type  |  Example (Valid)  |  Example (Invalid)  |                   Validation Rules                                |
   |----------|--------|-------------------|---------------------|-------------------------------------------------------------------| 
-  |Full Name |  text  |    "Ben Ward"     |       "Ben"         |         Must contain at least two words (first + last name)       |
+  |Full Name |  text  |    "Ben Ward"     |       "Ben"         |         Must contain at least two words (first + last name),      |
+  |          |        |                   |                     |        Musn't contain non-alphanumeric characters or numbers.     |
+  |          |        |                   |                     |         Must contain at least one whitespace space character.     |
+  |          |        |                   |                     |                                                                   |
   |  Email   | email  |"benward@gmail.com"|    "benward@com"    |           Must match email pattern with '@' and domain            |
-  |   DOB    |  date  |    "09/07/1998"   |"12/15/2000" or "20/04/2015"  | Must be a valid date or Must be over 16 years old        |
-  | Country  | select |       "UK"        |         ""          |                     Required Selection                            |
+  |          |        |                   |                     |                                                                   |
+  |   DOB    |  date  |    "09/07/1998"   |   "12/15/2000" or   |                                                                   |
+  |          |        |                   |     "20/04/2015"    |          Must be a valid date or Must be over 16 years old        |
+  |          |        |                   |                     |                                                                   |
+  | Country  | select |       "UK"        |          ""         |                     Required Selection                            |
+  |          |        |                   |                     |                                                                   |
   |Postal Code| text  |     "NR1 2AB"     |         "123"       |               Required only if Country = "UK"                     |
+  |          |        |                   |                     |                                                                   |
   |  Terms   |checkbox|     checked       |       unchecked     |              Must be checked before submission                    |
 
 -------------------------------------------------------------------------------------------------------------------------------------
-Validation Logic Notes
+
+# Validation Logic Notes
 - Full Name: split by space -> must have at least two parts.
 - Email: use regex to verify pattern.
 - DOB: must be a valid date and age must be over 16 (calculate age from date data).

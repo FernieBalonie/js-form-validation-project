@@ -1,0 +1,13 @@
+.error-border {
+  border: 2px solid red;
+}
+
+.success-border {
+  border: 2px solid green;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  display: none;
+}

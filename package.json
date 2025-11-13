@@ -1,0 +1,20 @@
+{
+  "name": "js-form-validation-project",
+  "version": "1.0.0",
+  "main": "index.js",
+   "scripts": {
+    "test": "jest"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "glob": "^10.4.5",
+    "jest": "^30.2.0"
+  }
+}

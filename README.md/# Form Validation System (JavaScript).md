@@ -1,11 +1,11 @@
 # Form Validation System (JavaScript)
-A custom front-end validation system built in pure JavaScript.
+A custom front-end validation system built in JavaScript.
 This project demonstrates real-world validation logic used in modern web applications.
 
 ## Features
 - Field-specific validation (name, email, dob, country, postal code, terms).
 - Real-time feedback.
-- Cross-field validation (e.g., country -> postal code).
+- Cross-field validation (e.g., country -> postal code, dob -> age confirmation)
 - Error message handling system.
 
 ## Project Goals
@@ -27,7 +27,7 @@ This project demonstrates real-world validation logic used in modern web applica
 |------------------------------------[ SUBMIT ]---------------------------------------|
 ---------------------------------------------------------------------------------------
 
-## Manual Testing Control Tables
+## Manual Testing Control and Metrics Tables
 
 -------------------------------------------------------------------------------------
 |                                    Full Name                                      |
@@ -167,7 +167,7 @@ This project demonstrates real-world validation logic used in modern web applica
 
 ## Notes
 Day 1
-- Goals: Start project planning, write features, rules and goals on README.md, commit changes to github
+- Goals: Start project planning, write features, conditions and goals on README.md, commit changes to github
 - Completed: All.
 - Tomorrow: start HTML layout and form structure.
 
@@ -182,12 +182,27 @@ Day 3
 - Tomorrow: Add extra fields like contact number, level of education, etc.
 
 Day 4
+- Goals: Organise test plan and run first unit tests for name field.
+- Completed: No, need to convert files to be able to run unit tests.
+- Tomorrow: Convert files and run validation test for name field. Add validation logic for the following input fields.
+- Notes: Updated Jest. Found an unexpected error: "File is a CommonJS module; it may be converted to an ES module". 
+
+Day 5
+- Goals: Finish organising test plan and run first unit test case with jest for name field. 
+- Completed: Yes, also add screenshots of gitbash to README folder. Also organised tests into different files.
+- Tomorrow: Start using TDD (Test-Driven Development) - Follow RED - GREEN - REFACTOR cycle - to write unit tests and validation logic for email and dob/age input fields.
+
+Day 6
+
 
 
 ## Ideas
 - Make sure accents are allowed.
+- Add validation logic for testing hyphens only "- -, -- --" 
+- Add extra fields like phone number, right to work, etc.
 
-## Biography
+
+## Bibliography
 Article on Format Validation -
 https://techdocs.akamai.com/identity-cloud/docs/the-format-validation#:~:text=To%20pass%20validation%2C%20a%20value%20must%20contain,blank%20spaces%2C%20results%20in%20a%20validation%20failure.
 

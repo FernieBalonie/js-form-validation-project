@@ -12,7 +12,18 @@ function showError(input, errorElement, message) {
     errorElement.style.display = 'none';
   }
 
-  module.exports = {
-    showError,
-    clearError,
-  };
+if (typeof window !== 'undefined') {
+    window.showError = showError;
+    window.clearError = clearError;
+}
+
+//globally accesible
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        showError,
+        clearError
+    }
+}
+
+
+

@@ -1,5 +1,10 @@
 // DOM interactions (error display, listeners, etc.)
 
+let helpers;
+if (typeof require !== 'undefined'){
+   helpers = require('../unit/helperFunctions.js');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const nameInput = document.getElementById('fullName');
   const nameError = document.getElementById('nameError');
@@ -7,43 +12,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!nameInput || !nameError || !form) return; // safety guard
 
-const { showError, clearError} = require ('./helperFunctions.js');
-  // Validation Function
+
+  // Validation functions
   function validateName() {
     const fullName = nameInput.value.trim();
 
     if (fullName === '') {
-      showError(nameInput, nameError, 'Full name is required.');
+      (helpers ? helpers.showError : window.showError)(nameInput, nameError, "Full name is required.");
       return false;
     }
 
     const nameParts = fullName.split(/\s+/);
     if (nameParts.length < 2) {
-      showError(nameInput, nameError, 'Please enter your first and last name.');
+      (helpers ? helpers.showError : window.showError)(nameInput, nameError, "Please enter your first and last name.");
       return false;
     }
 
     const namePattern = /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/;
     if (!namePattern.test(fullName)) {
-      showError(nameInput, nameError, 'Name can only contain letters, accents, spaces, hyphens.');
+      (helpers ? helpers.showError : window.showError)(nameInput, nameError, "Name can only contain letters, accents, spaces, hyphens.");
       return false;
     }
 
-    clearError(nameInput, nameError);
+    (helpers ? helpers.clearError : window.clearError)(nameInput, nameError);
     return true;
   }
 
+  //Broswer global
+ window.validateName = validateName;
+
+
   // Event Listeners
-  // Instant validation while typing
-  nameInput.addEventListener('input', validateName);
-
-  // Validate again when leaving the field (ensures proper cleanup before submitting)
-  nameInput.addEventListener('blur', validateName);
-
-  // Prevent form submission if invalid
+  nameInput.addEventListener('input', validateName); // Instant validation while typing
+  nameInput.addEventListener('blur', validateName);  // Validate again when leaving the field (ensures proper cleanup before submitting)
   form.addEventListener('submit', function (event) {
     if (!validateName()) {
       event.preventDefault();
     }
   });
+  
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+      validateName
+    }
+  }
 });

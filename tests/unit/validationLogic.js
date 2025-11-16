@@ -23,13 +23,14 @@ function validateName (fullName) {
   }
 
   return true;
-}  
+} 
 
-//EXPORT for tests
-module.exports = {
-    validateName,
-  };
-
+//Browser global
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    validateName
+  };  
+}
  
 //Make available globally in browser
 if (typeof window !== 'undefined') {

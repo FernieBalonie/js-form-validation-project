@@ -9,13 +9,13 @@ It checks that each field input is valid before the form can be submitted follow
 List of test requirements:
 - Manual Static Testing (Check OOP principles, naming conventions, modularity, comments and documentation; and reviewing logic) []
 - Manual Dynamic Testing (Manually simulate user behaviour on a webpage in different browsers) []
-- Integration Testing (Dynamic Testing) []
-- Unit Testing with Jest (Automated Functional and Dynamic Testing) []
+- Integration Testing (Dynamic Testing; Mocks and Stubs) []
+- Unit Testing with Jest (Automated Functional and Dynamic Testing; Mocks and Stubs) []
 - Usability Testing using Google Lighthouse, and a few friends (Evaluate usability, clarity and user experience) []
 - Regression Testing (Ensures that new code changes do not break existing functionality) []
-- E2E Testing using Cypress (Dynamic Testing) []
+- E2E Testing using Cypress (Dynamic Testing, Mocks and Stubs) []
 - White Box Testing Application (Ensure every part of the code is there for a reason and is functional) []
-- System Testing (Dynamic Testing) - after completing the project []
+- System Testing (Dynamic Testing; Mocks and Stubs) - after completing the project []
 - Acceptance Testing (Following Project Rubric) []
 - IF I HAVE ENOUGH TIME - Mutation Testing (Checks if unit tests are strong enough by intentionally breaking the code) []
 
@@ -52,10 +52,7 @@ List of test requirements:
 
 -------------------------------------------------------------------------------------------------------------------------------------
 
-List of test requirements:
-- Manual Testing []
-- Unit testing with Jest []
-- 
+
 
 
 

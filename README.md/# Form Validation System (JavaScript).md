@@ -190,16 +190,19 @@ Day 4
 Day 5
 - Goals: Finish organising test plan and run first unit test case with jest for name field. 
 - Completed: Yes, also add screenshots of gitbash to README folder. Also organised tests into different files.
-- Tomorrow: Start using TDD (Test-Driven Development) - Follow RED - GREEN - REFACTOR cycle - to write unit tests and validation logic for email and dob/age input fields.
+- Tomorrow: Start using TDD (Test-Driven Development) - Follow RED - GREEN - REFACTOR cycle - to write unit tests and validation logic for email and dob/age input fields. Apply Mocks and Stubs to DOM handlers.
 
 Day 6
-
+- Goals: Start using TDD (Test-Driven Development) - Follow RED - GREEN - REFACTOR cycle - to write unit tests and validation logic for email and dob/age input fields. Apply Mocks and Stubs to DOM handlers. Add some of the articles and tutorials I've been reading to bibliography.
+- Completed:
+- Tomorrow: 
 
 
 ## Ideas
 - Make sure accents are allowed.
 - Add validation logic for testing hyphens only "- -, -- --" 
 - Add extra fields like phone number, right to work, etc.
+- Improve UI.
 
 
 ## Bibliography

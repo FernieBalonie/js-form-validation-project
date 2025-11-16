@@ -1,7 +1,9 @@
 // Test Suites
 
 // Full Name
-const { validateName} = require ('./validationLogic.js');
+//import logic function first
+const { validateName } = require('./validationLogic.js'); 
+
 // Test Cases
 describe ('validateName', () => {
     test('returns false for empty string', () => {

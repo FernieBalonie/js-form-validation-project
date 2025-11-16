@@ -193,7 +193,7 @@ Day 5
 - Tomorrow: Start using TDD (Test-Driven Development) - Follow RED - GREEN - REFACTOR cycle - to write unit tests and validation logic for email and dob/age input fields. Apply Mocks and Stubs to DOM handlers.
 
 Day 6
-- Goals: Start using TDD (Test-Driven Development) - Follow RED - GREEN - REFACTOR cycle - to write unit tests and validation logic for email and dob/age input fields. Apply Mocks and Stubs to DOM handlers. Add some of the articles and tutorials I've been reading to bibliography.
+- Goals: Start using TDD (Test-Driven Development) - Follow RED - GREEN - REFACTOR cycle - to write unit tests followed by the validation logic and finally DOM hadlers for input fields. Apply Mocks and Stubs to DOM handlers. Add some of the articles and tutorials I've been reading to bibliography.
 - Completed:
 - Tomorrow: 
 

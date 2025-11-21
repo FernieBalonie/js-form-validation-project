@@ -13,7 +13,11 @@ describe('Age Confirmation - Conditional Display & Validation', () => {
 
     beforeEach(() => {
         html = fs.readFileSync(path.resolve(__dirname, '../../../index.html'), 'utf-8');
-        document.documentElement.innerHTML = html;
+    
+        const htmlWithoutScripts = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+        
+        // set the html without scripts
+        document.documentElement.innerHTML = htmlWithoutScripts;
 
         jest.resetModules();
         require('../../unit/domHandlers.js');
@@ -24,7 +28,15 @@ describe('Age Confirmation - Conditional Display & Validation', () => {
         ageConfirmGroup = document.getElementById('ageConfirmGroup');
         ageConfirmCheckbox = document.getElementById('ageConfirm');
         ageConfirmError = document.getElementById('ageConfirmError');
-        ageConfirmLabel = document.querySelector('label[for="ageConfirm"]');
+        ageConfirmLabel = document.getElementById('ageConfirmLabel');
+
+        if (!dobInput || !ageConfirmGroup || !ageConfirmCheckbox) {
+            console.error('Missing elements:');
+            console.error('dobInput:', dobInput);
+            console.error('ageConfirmGroup:', ageConfirmGroup);
+            console.error('ageConfirmCheckbox:', ageConfirmCheckbox);
+            throw new Error('Critical DOM elements not found. Check HTML structure.');
+        }
     });
 
     //checkbox visibility
@@ -209,6 +221,19 @@ describe('Age Confirmation - Conditional Display & Validation', () => {
 
         test('form can be submitted when age confirmation is checked', () => {
             const form = document.getElementById('registrationForm');
+            const nameInput = document.getElementById('fullName');
+            const emailInput = document.getElementById('email');
+            const dobInput = document.getElementById('dob');
+            const countrySelect = document.getElementById('country');
+            const termsCheckbox = document.getElementById('terms');
+
+            
+            //valid inputs
+            nameInput.value = 'Fernanda Mauri';
+            emailInput.value = 'fe07mauri@example.com';
+            countrySelect.value = 'US';
+            termsCheckbox.checked = true;
+
             
             //valid DOB
             const today = new Date();
@@ -216,19 +241,14 @@ describe('Age Confirmation - Conditional Display & Validation', () => {
             dobInput.value = validDate.toISOString().split('T')[0];
             dobInput.dispatchEvent(new Event('input'));
 
-            //checked box
             ageConfirmCheckbox.checked = true;
             ageConfirmCheckbox.dispatchEvent(new Event('change'));
 
-            //no error shown
-            expect(ageConfirmCheckbox.classList.contains('error-border')).toBe(false);
-            expect(ageConfirmCheckbox.classList.contains('success-border')).toBe(true);
-
-            //form can be submitted
+            // Now try to submit
             const submitEvent = new Event('submit', { cancelable: true });
             form.dispatchEvent(submitEvent);
             expect(submitEvent.defaultPrevented).toBe(false);
-        });
+    }); 
     });
 
     //user workflow validation

@@ -16,6 +16,9 @@ const form = document.getElementById('registrationForm');
 const nameInput = document.getElementById('fullName');
 const emailInput = document.getElementById('email');
 const dobInput = document.getElementById('dob');
+const calculatedAgeSpan = document.getElementById('calculatedAge');
+const ageConfirmGroup = document.getElementById('ageConfirmGroup');
+const ageConfirmCheckbox = document.getElementById('ageConfirm'); 
 const countrySelect = document.getElementById('country');
 const postalCodeInput = document.getElementById('postalCode');
 const termsCheckbox = document.getElementById('terms');
@@ -23,6 +26,7 @@ const termsCheckbox = document.getElementById('terms');
 const nameError = document.getElementById('nameError');
 const emailError = document.getElementById('emailError');
 const dobError = document.getElementById('dobError');
+const ageConfirmError = document.getElementById('ageConfirmError');
 const countryError = document.getElementById('countryError');
 const postalCodeError = document.getElementById('postalCodeError');
 const termsError = document.getElementById('termsError');
@@ -94,66 +98,108 @@ function validateEmail() {
 // DATE OF BIRTH VALIDATION LOGIC
 
 function validateDOB() {
-    const dateString = dobInput.value;
+  const dateString = dobInput.value;
 
-    if (!dateString || dateString.trim() === '') {
-        showError(dobInput, dobError, "Date of birth is required.");
-        return false;
+  if (!dateString || dateString.trim() === '') {
+    showError(dobInput, dobError, "Date of birth is required.");
+    hideAgeConfirmation();  
+    return false;
     }
 
-    const inputDate = new Date(dateString);
-    const today = new Date();
+  const inputDate = new Date(dateString);
+  const today = new Date();
 
     // Calculate age
-    let age = today.getFullYear() - inputDate.getFullYear();
-    const monthDiff = today.getMonth() - inputDate.getMonth();
-    const dayDiff = today.getDate() - inputDate.getDate();
+  let age = today.getFullYear() - inputDate.getFullYear();
+  const monthDiff = today.getMonth() - inputDate.getMonth();
+  const dayDiff = today.getDate() - inputDate.getDate();
 
-    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-        age--;
+  if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+    age--;
     }
 
-    if (inputDate > today) {
-        showError(dobInput, dobError, "Date of birth cannot be in the future.");
-        return false;
+  if (inputDate > today) {
+    showError(dobInput, dobError, "Date of birth cannot be in the future.");
+    hideAgeConfirmation();  
+    return false;
     }
 
-    if (age < 18) {
-        showError(dobInput, dobError, "You must be at least 18 years old.");
-        return false;
+  if (age < 16) {
+    showError(dobInput, dobError, "You must be at least 16 years old.");
+    hideAgeConfirmation();  
+    return false;
     }
 
-    if (age > 120) {
-        showError(dobInput, dobError, "Please enter a valid date of birth.");
-        return false;
+  if (age > 100) {
+    showError(dobInput, dobError, "Please enter a valid date of birth.");
+    hideAgeConfirmation();  
+    return false;
     }
 
-    clearError(dobInput, dobError);
-    //dynamic sentence for checkbox
-    ageConfirmLabel.innerHTML = `
-        <input type="checkbox" id="ageConfirm">
-        Can you confirm you are ${age} year${age === 1 ? "" : "s"} old?
-    `;
+  clearError(dobInput, dobError);
+  showAgeConfirmation(age); 
+  return true;
+}
 
-    //regrab checkbox
-    ageConfirmCheckbox = document.getElementById("ageConfirm");
 
-    //show the confirmation section
-    ageConfirmGroup.style.display = "block";
 
-    return true;
 
+// age confirmation
+
+function showAgeConfirmation(age) {
+  if (!ageConfirmGroup) return;
+  
+  // Update the age in the span
+  if (calculatedAgeSpan) {
+    calculatedAgeSpan.textContent = age;
+  }
+  
+  // Update the label text to handle singular/plural "year/years"
+  const ageConfirmLabelSpan = document.getElementById('ageConfirmLabel');
+  if (ageConfirmLabelSpan) {
+    ageConfirmLabelSpan.textContent = `Can you confirm you are ${age} year${age === 1 ? "" : "s"} old?`;
+  }
+  
+  // Show the confirmation box
+  ageConfirmGroup.style.display = 'block';
+  
+  return true;
+}
+
+function hideAgeConfirmation() {
+  if (!ageConfirmGroup) return;
+  
+  // Hide the confirmation box
+  ageConfirmGroup.style.display = 'none';
+  
+  // Uncheck and clear any errors
+  if (ageConfirmCheckbox) {
+    ageConfirmCheckbox.checked = false;
+    clearError(ageConfirmCheckbox, ageConfirmError);
+}
+}
+
+function validateAgeConfirmation() {
+  const isChecked = ageConfirmCheckbox.checked;
+
+  if (!isChecked) {
+    showError(ageConfirmCheckbox, ageConfirmError, "Please confirm your age to continue.");
+    return false;
+  }
+
+  clearError(ageConfirmCheckbox, ageConfirmError);
+  return true;
 }
 
 // COUNTRY VALIDATION LOGIC
 
 function validateCountry() {
-    const countryCode = countrySelect.value;
+  const countryCode = countrySelect.value;
 
     if (!countryCode || countryCode === '') {
-        showError(countrySelect, countryError, "Please select a country.");
-        togglePostalCodeField(countryCode);
-        return false;
+      showError(countrySelect, countryError, "Please select a country.");
+      togglePostalCodeField(countryCode);
+      return false;
     }
 
     clearError(countrySelect, countryError);
@@ -172,23 +218,23 @@ function validateCountry() {
 
 // POSTAL CODE VALIDATION 
 function togglePostalCodeField(countryCode) {
-    if (!postalCodeGroup) return;
+  if (!postalCodeGroup) return;
 
-    if (countryCode === 'GB') {
-        // Show postal code field for UK
-        postalCodeGroup.style.display = 'block';
-    } else {
-        // Hide postal code field for non-UK countries
-        postalCodeGroup.style.display = 'none';
-        // Clear any errors when hiding
-        clearError(postalCodeInput, postalCodeError);
-    }
+  if (countryCode === 'GB') {
+    // show postal code field for UK
+    postalCodeGroup.style.display = 'block';
+  } else {
+    // hide postal code field for non-UK countries
+    postalCodeGroup.style.display = 'none';
+    // clear errors when hiding
+    clearError(postalCodeInput, postalCodeError);
+  }
 }
 // POSTAL CODE VALIDATION (UK ONLY)
 
 function validatePostalCode() {
-    const postalCode = postalCodeInput.value.trim();
-    const countryCode = countrySelect.value;
+  const postalCode = postalCodeInput.value.trim();
+  const countryCode = countrySelect.value;
 
     // Only validate if UK is selected
     if (countryCode !== 'GB') {
@@ -234,12 +280,16 @@ function validateForm() {
   const isDOBValid = validateDOB();
   const isCountryValid = validateCountry();
   const areTermsValid = validateTerms();
+
+  const isAgeConfirmValid = ageConfirmGroup && ageConfirmGroup.style.display === 'block' 
+    ? validateAgeConfirmation() 
+    : true;
   
   // Only validate postal code if UK is selected
   const countryCode = countrySelect.value;
   const isPostalCodeValid = countryCode === 'GB' ? validatePostalCode() : true;
 
-  return isNameValid && isEmailValid && isDOBValid && isCountryValid && isPostalCodeValid && areTermsValid;
+  return isNameValid && isEmailValid && isDOBValid && isAgeConfirmValid && isCountryValid && isPostalCodeValid && areTermsValid;
 }
 
 // event listeners
@@ -254,6 +304,11 @@ emailInput.addEventListener('blur', validateEmail);
 // Date of Birth
 dobInput.addEventListener('input', validateDOB);
 dobInput.addEventListener('blur', validateDOB);
+
+if (ageConfirmCheckbox) {
+  ageConfirmCheckbox.addEventListener('change', validateAgeConfirmation);
+  ageConfirmCheckbox.addEventListener('blur', validateAgeConfirmation);
+}
 
 // Country
 countrySelect.addEventListener('change', validateCountry);

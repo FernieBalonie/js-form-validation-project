@@ -84,6 +84,11 @@ function validateDOB(dateString) {
 
 }
 
+//Age confirmation validation
+function validateAgeConfirmation(isChecked) {
+  return isChecked === true;
+}
+
 //Country validation
 function validateCountry(countryCode) {
     // Check if empty or default placeholder
@@ -118,24 +123,26 @@ function validateTerms(isChecked) {
 }
 
 
-//Browser global
+//browser global
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     validateName,
     validateEmail,
     validateDOB,
+    validateAgeConfirmation,
     validateCountry,
     validatePostalCode,
     validateTerms
   };  
 }
  
-//Make available globally in browser
+//available globally in browser
 if (typeof window !== 'undefined') {
   window.validateName = {
     validateName,
     validateEmail,
     validateDOB,
+    validateAgeConfirmation,
     validateCountry,
     validatePostalCode,
     validateTerms

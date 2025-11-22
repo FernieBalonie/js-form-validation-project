@@ -23,6 +23,6 @@ describe ('validateName', () => {
     });
 
     test('returns false for name with invalid characters', () => {
-        expect(validateName("John Doe!")).toBe(false);
+        expect(validateName("Fernie Mauri!")).toBe(false);
     });
 });

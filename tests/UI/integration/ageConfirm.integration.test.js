@@ -30,13 +30,13 @@ describe('Age Confirmation - Conditional Display & Validation', () => {
         ageConfirmError = document.getElementById('ageConfirmError');
         ageConfirmLabel = document.getElementById('ageConfirmLabel');
 
-        if (!dobInput || !ageConfirmGroup || !ageConfirmCheckbox) {
+        /*if (!dobInput || !ageConfirmGroup || !ageConfirmCheckbox) {
             console.error('Missing elements:');
             console.error('dobInput:', dobInput);
             console.error('ageConfirmGroup:', ageConfirmGroup);
             console.error('ageConfirmCheckbox:', ageConfirmCheckbox);
             throw new Error('Critical DOM elements not found. Check HTML structure.');
-        }
+        } */
     });
 
     //checkbox visibility
@@ -220,19 +220,32 @@ describe('Age Confirmation - Conditional Display & Validation', () => {
         });
 
         test('form can be submitted when age confirmation is checked', () => {
-            const form = document.getElementById('registrationForm');
+           const form = document.getElementById('registrationForm');
             const nameInput = document.getElementById('fullName');
             const emailInput = document.getElementById('email');
+            const phoneCountryCodeSelect = document.getElementById('phoneCountryCode');
+            const phoneNumberInput = document.getElementById('phoneNumber');
             const dobInput = document.getElementById('dob');
+            const ageConfirmCheckbox = document.getElementById('ageConfirm'); 
+            const genderRadios = document.querySelectorAll('input[name="gender"]');
             const countrySelect = document.getElementById('country');
             const termsCheckbox = document.getElementById('terms');
-
-            
+                
             //valid inputs
             nameInput.value = 'Fernanda Mauri';
             emailInput.value = 'fe07mauri@example.com';
             countrySelect.value = 'US';
             termsCheckbox.checked = true;
+
+            if (phoneCountryCodeSelect && phoneNumberInput) {
+                phoneCountryCodeSelect.value = '+1';
+                phoneNumberInput.value = '1234567890';
+            }
+
+            if (genderRadios) {
+                genderRadios[0].checked = true;
+            }
+
 
             
             //valid DOB

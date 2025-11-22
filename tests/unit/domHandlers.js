@@ -15,18 +15,23 @@ document.addEventListener('DOMContentLoaded', () => {
 const form = document.getElementById('registrationForm');
 const nameInput = document.getElementById('fullName');
 const emailInput = document.getElementById('email');
+const phoneCountryCodeSelect = document.getElementById('phoneCountryCode');
+const phoneNumberInput = document.getElementById('phoneNumber');
 const dobInput = document.getElementById('dob');
 const calculatedAgeSpan = document.getElementById('calculatedAge');
 const ageConfirmGroup = document.getElementById('ageConfirmGroup');
 const ageConfirmCheckbox = document.getElementById('ageConfirm'); 
+const genderRadios = document.querySelectorAll('input[name="gender"]');
 const countrySelect = document.getElementById('country');
 const postalCodeInput = document.getElementById('postalCode');
 const termsCheckbox = document.getElementById('terms');
 
 const nameError = document.getElementById('nameError');
 const emailError = document.getElementById('emailError');
+const phoneError = document.getElementById('phoneError');
 const dobError = document.getElementById('dobError');
 const ageConfirmError = document.getElementById('ageConfirmError');
+const genderError = document.getElementById('genderError'); 
 const countryError = document.getElementById('countryError');
 const postalCodeError = document.getElementById('postalCodeError');
 const termsError = document.getElementById('termsError');
@@ -38,6 +43,9 @@ const postalCodeGroup = postalCodeInput ? postalCodeInput.closest('.form-group')
 if (!form || !nameInput || !emailInput || !dobInput || !countrySelect || !postalCodeInput || !termsCheckbox) {
     return;
 }
+
+//call the populateCountryDropdowns function
+populateCountryDropdowns();
 
 // hide postal code field initially 
     if (postalCodeGroup) {
@@ -94,6 +102,43 @@ function validateEmail() {
     return true;
 }
 
+//validate phone number
+function validatePhoneNumber() {
+    const phoneNumber = phoneNumberInput ? phoneNumberInput.value.trim() : '';
+    const countryCode = phoneCountryCodeSelect ? phoneCountryCodeSelect.value : '';
+    
+    //check if elements exist
+    if (!phoneNumberInput || !phoneCountryCodeSelect) {
+        return true; // obv skip validation if elements don't exist
+    }
+    
+    //check if country code is selected
+    if (!countryCode || countryCode === '') {
+        showError(phoneCountryCodeSelect, phoneError, "Please select a country code.");
+        return false;
+    }
+    
+    //check if phone number is provided by user
+    if (phoneNumber === '') {
+        showError(phoneNumberInput, phoneError, "Phone number is required.");
+        return false;
+    }
+    
+    //validate using validation logic
+    const isValid = validationLogic ? 
+        validationLogic.validatePhone(phoneNumber, countryCode) : 
+        window.validatePhone && window.validatePhone.validatePhone ? 
+        window.validatePhone.validatePhone(phoneNumber, countryCode) : true;
+    
+    if (!isValid) {
+        showError(phoneNumberInput, phoneError, "Please enter a valid phone number (7-15 digits).");
+        return false;
+    }
+    
+    clearError(phoneNumberInput, phoneError);
+    clearError(phoneCountryCodeSelect, phoneError);
+    return true;
+}
 
 // DATE OF BIRTH VALIDATION LOGIC
 
@@ -191,6 +236,59 @@ function validateAgeConfirmation() {
   return true;
 }
 
+//gender validation
+function validateGenderSelection() {
+    //find which radio button is checked
+    const selectedGender = document.querySelector('input[name="gender"]:checked');
+    
+    //if no radio button is selected
+    if (!selectedGender) {
+        showError(genderRadios[0], genderError, "Please select your gender.");
+        return false;
+    }
+    
+    //validate the selected value using validation logic
+    const isValid = validationLogic ? 
+        validationLogic.validateGender(selectedGender.value) : 
+        window.validateGender && window.validateGender.validateGender ? 
+        window.validateGender.validateGender(selectedGender.value) : true;
+    
+    if (!isValid) {
+        showError(genderRadios[0], genderError, "Please select a valid gender option.");
+        return false;
+    }
+    
+    clearError(genderRadios[0], genderError);
+    return true;
+}
+
+//dropdown country population validation
+function populateCountryDropdowns() {
+    //check if countriesData is available first
+    if (typeof countriesData === 'undefined') {
+        console.error('countriesData not found. Make sure countriesData.js is loaded.');
+        return;
+    }
+
+    //populate main country select with options
+    countriesData.forEach(country => {
+        const option = document.createElement('option');
+        option.value = country.code;
+        option.textContent = country.name;
+        countrySelect.appendChild(option);
+    });
+
+    //populate phone country code select for phone number
+    if (phoneCountryCodeSelect) {
+        countriesData.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country.dialCode;
+            option.textContent = `${country.name} (${country.dialCode})`;
+            phoneCountryCodeSelect.appendChild(option);
+        });
+    }
+}
+
 // COUNTRY VALIDATION LOGIC
 
 function validateCountry() {
@@ -277,7 +375,9 @@ function validateTerms() {
 function validateForm() {
   const isNameValid = validateName();
   const isEmailValid = validateEmail();
+  const isPhoneValid = validatePhoneNumber();
   const isDOBValid = validateDOB();
+  const isGenderValid = validateGenderSelection();
   const isCountryValid = validateCountry();
   const areTermsValid = validateTerms();
 
@@ -289,7 +389,7 @@ function validateForm() {
   const countryCode = countrySelect.value;
   const isPostalCodeValid = countryCode === 'GB' ? validatePostalCode() : true;
 
-  return isNameValid && isEmailValid && isDOBValid && isAgeConfirmValid && isCountryValid && isPostalCodeValid && areTermsValid;
+  return isNameValid && isEmailValid && isPhoneValid && isDOBValid && isAgeConfirmValid && isGenderValid && isCountryValid && isPostalCodeValid && areTermsValid;
 }
 
 // event listeners
@@ -301,13 +401,32 @@ nameInput.addEventListener('blur', validateName);
 emailInput.addEventListener('input', validateEmail);
 emailInput.addEventListener('blur', validateEmail);
 
+//phone number
+if (phoneCountryCodeSelect) {
+    phoneCountryCodeSelect.addEventListener('change', validatePhoneNumber);
+    phoneCountryCodeSelect.addEventListener('blur', validatePhoneNumber);
+}
+
+if (phoneNumberInput) {
+    phoneNumberInput.addEventListener('input', validatePhoneNumber);
+    phoneNumberInput.addEventListener('blur', validatePhoneNumber);
+}
+
 // Date of Birth
 dobInput.addEventListener('input', validateDOB);
 dobInput.addEventListener('blur', validateDOB);
 
+//age confirmation
 if (ageConfirmCheckbox) {
   ageConfirmCheckbox.addEventListener('change', validateAgeConfirmation);
   ageConfirmCheckbox.addEventListener('blur', validateAgeConfirmation);
+}
+
+//gender
+if (genderRadios && genderRadios.length > 0) {
+    genderRadios.forEach(radio => {
+        radio.addEventListener('change', validateGenderSelection);
+    });
 }
 
 // Country
@@ -333,7 +452,9 @@ form.addEventListener('submit', function(event) {
 
 window.validateName = validateName;
 window.validateEmail = validateEmail;
+window.validatePhoneNumber = validatePhoneNumber;
 window.validateDOB = validateDOB;
+window.validateGender = validateGenderSelection;
 window.validateCountry = validateCountry;
 window.validatePostalCode = validatePostalCode;
 window.validateTerms = validateTerms;
@@ -344,7 +465,9 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     validateName,
     validateEmail,
+    validatePhoneNumber,
     validateDOB,
+    validateGenderSelection,
     validateCountry,
     validatePostalCode,
     validateTerms,

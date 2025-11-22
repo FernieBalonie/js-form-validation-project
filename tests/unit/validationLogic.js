@@ -122,6 +122,49 @@ function validateTerms(isChecked) {
   return isChecked === true;
 }
 
+//phone number valdation
+function validatePhone (phoneNumber, countryCode){
+
+  if (!countryCode || countryCode.trim() === ''){
+    return false;
+  }
+  // first check if number is null, empty or invalid
+  if (!phoneNumber) {
+    return false;
+  }
+
+  const trimmedPhone = phoneNumber.trim();
+  if (trimmedPhone === '') {
+    return false;
+  }
+
+  const cleanedPhone = trimmedPhone.replace(/[\s\-\(\)]/g, '');
+
+  // Check if phone contains only digits (after cleaning)
+  const phonePattern = /^\d+$/;
+  if (!phonePattern.test(cleanedPhone)) {
+    return false;
+  }
+
+  // Check length (typically 7-15 digits for international numbers)
+  if (cleanedPhone.length < 7 || cleanedPhone.length > 15) {
+    return false;
+  }
+
+  return true;
+}
+
+//gender validation
+function validateGender(genderValue) {
+  // Check if a gender option is selected
+  if (!genderValue || genderValue.trim() === '') {
+    return false;
+  }
+
+  // Check if the value is one of the valid options
+  const validOptions = ['female', 'male', 'other'];
+  return validOptions.includes(genderValue.toLowerCase());
+}
 
 //browser global
 if (typeof module !== 'undefined' && module.exports) {
@@ -132,6 +175,8 @@ if (typeof module !== 'undefined' && module.exports) {
     validateAgeConfirmation,
     validateCountry,
     validatePostalCode,
+    validatePhone,
+    validateGender,
     validateTerms
   };  
 }
@@ -145,6 +190,8 @@ if (typeof window !== 'undefined') {
     validateAgeConfirmation,
     validateCountry,
     validatePostalCode,
+    validatePhone,
+    validateGender,
     validateTerms
   };
 }

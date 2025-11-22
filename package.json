@@ -9,7 +9,8 @@
     "test": "tests"
   },
   "jest": {
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "setupFiles": ["<rootDir>/tests/setup.js"]
   },
   "keywords": [],
   "author": "",

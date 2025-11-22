@@ -2,6 +2,7 @@
 
 const { validatePostalCode } = require('./validationLogic.js');
 
+
 describe ('validatePostalCode - GB only', () => {
     
     //non-GB countries should return true for empty string
